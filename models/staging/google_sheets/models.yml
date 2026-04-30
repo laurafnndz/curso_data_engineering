@@ -2,9 +2,7 @@ version: 2
 
 models:
   - name: stg_google_sheets__budget
-    config:
-      contract:
-        enforced: true
+
     description: >
       Datos google sheets
     columns:

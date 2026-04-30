@@ -2,7 +2,7 @@ version: 2
 
 sources:
 
-  - name: google_sheets # name of the source 
+  - name: google_sheet # name of the source 
     schema: google_sheet # this is the schema our raw data lives in
     database: DB39_BRONZE_DB # this is the name of our database
 
@@ -29,3 +29,11 @@ sources:
           - name: month
           - name: _fivetran_synced
 
+
+      - name: users
+        columns:
+          - name: nombre
+            description: usuarios google sheet
+          - name: dni
+          - name: email
+          - name: fecha_alta_sistema
