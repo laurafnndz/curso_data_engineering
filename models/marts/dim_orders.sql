@@ -1,0 +1,1 @@
+Select * From {{ref("stg_postgre_db__orders")}}

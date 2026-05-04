@@ -38,5 +38,11 @@ clean-targets:         # directories to be removed by `dbt clean`
 models:
   my_new_project:
     staging:
-      postgre_db:              
+      postgre_db:
         +materialized: view
+        +database: DB39_SILVER_DB
+        +schema: staging
+    marts:
+      +materialized: table
+      +database: DB39_GOLD_DB
+      +schema: marts

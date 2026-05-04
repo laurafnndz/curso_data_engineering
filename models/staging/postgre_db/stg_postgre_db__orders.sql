@@ -1,13 +1,9 @@
 {{ config(
-materialized='incremental',
-incremental_strategy='microbatch',
-event_time='created_at',
-begin='2024-01-01',
-batch_size='day',
-lookback=2
-) }}
-
-
+    materialized='incremental', 
+    unique_key='product_id',
+    incremental_strategy='append'
+    ) 
+    }}
 
 with 
 

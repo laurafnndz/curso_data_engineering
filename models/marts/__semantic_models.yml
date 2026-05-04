@@ -1,0 +1,73 @@
+semantic_models:
+  - name: orders
+    description: "Modelo semántico de pedidos"
+    model: ref('fct_orders')
+
+    # - ENTITIES 
+    entities:
+      - name: order
+        type: primary
+        expr: order_id          # clave única de cada pedido
+
+      - name: user
+        type: foreign
+        expr: user_id           # enlace con la tabla de usuarios
+
+    # ─ DIMENSIONS 
+    dimensions:
+      - name: created_at
+        type: time
+        type_params:
+          time_granularity: day  # puedes agregar por día, semana, mes
+
+      - name: status
+        type: categorical        # filtra por pending, shipped, delivered...
+
+      - name: country
+        type: categorical        # filtra por país
+
+    # ─ MEASURES 
+    measures:
+      - name: revenue
+        description: "Ingresos totales"
+        agg: sum
+        expr: order_total        # suma del valor total del pedido
+
+      - name: number_of_orders
+        description: "Número de pedidos"
+        agg: count
+        expr: order_id           # cuenta de pedidos
+
+      - name: unique_buyers
+        description: "Compradores únicos"
+        agg: count_distinct
+        expr: user_id            # usuarios únicos que han comprado
+
+# ─ METRICS 
+metrics:
+  - name: revenue
+    description: "Ingresos totales de pedidos"
+    type: simple
+    type_params:
+      measure: revenue
+
+  - name: number_of_orders
+    description: "Total de pedidos realizados"
+    type: simple
+    type_params:
+      measure: number_of_orders
+
+  - name: unique_buyers
+    description: "Compradores únicos"
+    type: simple
+    type_params:
+      measure: unique_buyers
+
+  - name: average_order_value
+    description: "Valor medio por pedido (AOV)"
+    type: derived
+    type_params:
+      expr: revenue / number_of_orders
+      metrics:
+        - name: revenue
+        - name: number_of_orders
